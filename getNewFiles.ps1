@@ -8,11 +8,11 @@ PARAM(
     [ValidateScript({Test-Path $_})]
     [string]$targetFilePath
 )
-
 Import-Module -Name "./logger.psm1"
-
-
+$currentFilePath = (Get-Item -Path ".\" -Verbose).FullName
+$logFilePath = $currentFilePath + "\Logs\"
 $existingFiles = Get-ChildItem $targetFilePath -Filter ".png"
 
-logOutput("Hello world")
+Write-Host $logFilePath
+logOutput -stringToLog "Hello world" -targetFilePath $logFilePath 
 
