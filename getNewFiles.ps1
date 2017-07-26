@@ -11,7 +11,10 @@ PARAM(
 Import-Module -Name "./logger.psm1"
 $currentFilePath = (Get-Item -Path ".\" -Verbose).FullName
 $logFilePath = $currentFilePath + "\Logs\"
-$existingFiles = Get-ChildItem $targetFilePath -Filter ".png"
+$existingFiles = Get-ChildItem $targetFilePath -Filter "*.png"
+logOutput -stringToLog (""+($existingFiles.Count)+" files exist already") -targetFilePath $logFilePath 
 
-logOutput -stringToLog "Hello world" -targetFilePath $logFilePath 
+$newFiles = Get-ChildItem $windowsFilePath
+logOutput -stringToLog (""+($newFiles.Count)+" new files to scan") -targetFilePath $logFilePath 
+$newFiles = $newFiles | Where-Object ($existingFiles -notcontains $_)
 

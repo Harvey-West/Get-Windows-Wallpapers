@@ -1,1 +1,0 @@
-powershell -ExecutionPolicy ByPass -File ./getNewFiles.ps1

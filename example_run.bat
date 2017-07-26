@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy ByPass -File ./getNewFiles.ps1 -targetFilePath C:\Users\<windows user>\Documents\Wallpapers -windowsFilePath %Temp%\..\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets
