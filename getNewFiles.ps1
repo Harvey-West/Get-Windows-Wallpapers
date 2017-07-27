@@ -23,7 +23,9 @@ function log($outputString){
         logOutput -stringToLog $outputString -targetFilePath $logFilePath
     }
 }
-
+$dateTargetFilePath = $targetFilePath + "\" + (Get-Date -format u).substring(0,10) + "\"
+log($dateTargetFilePath)
+mkdir -Force $dateTargetFilePath | Out-Null
 $existingFiles = Get-ChildItem $targetFilePath -Filter "*.png" #Find all existing files with .png extension
 log(""+($existingFiles.Count)+" files exist already")
 
@@ -36,3 +38,5 @@ $fileSizeBytesMinimum = 200*1000 #File size minimum to try and eliminate non 16-
 $filteredFiles = $newFiles | Where-Object {$_.Name -notin ($existingFiles.Name.Replace(".png", "")) -and $_.Length -gt $fileSizeBytesMinimum}
 log(""+($filteredFiles.Count)+ " unique files greater than " + $fileSizeBytesMinimum + "B")
 
+#For each filtered file, copy the item to a folder and append ".png" to each file
+$filteredFiles | ForEach-Object{ $_.FullName | Copy-Item -Destination (Join-Path $dateTargetFilePath ($_.Name+".png"))}
