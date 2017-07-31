@@ -26,7 +26,7 @@ function log($outputString){
 $dateTargetFilePath = $targetFilePath + "\" + (Get-Date -format u).substring(0,10) + "\"
 log($dateTargetFilePath)
 mkdir -Force $dateTargetFilePath | Out-Null
-$existingFiles = Get-ChildItem $targetFilePath -Filter "*.png" #Find all existing files with .png extension
+$existingFiles = Get-ChildItem $targetFilePath -Recurse -Filter "*.png" #Find all existing files with .png extension
 log(""+($existingFiles.Count)+" files exist already")
 
 $newFiles = Get-ChildItem $windowsFilePath #Get all windows wallpaper files
