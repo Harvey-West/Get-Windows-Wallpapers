@@ -9,10 +9,10 @@
 ){
 if (!(Test-Path ($targetFilePath+"\test.log")))
 {
-   New-Item -path $targetFilePath -name "test.log" -type "file"
+   New-Item -path $targetFilePath -name "application.log" -type "file"
    Write-Host "Created new file and text content added"
 }
-$logFile = $targetFilePath+"\test.log"
+$logFile = $targetFilePath+"\application.log"
 $currentTime = "[" + (Get-Date) + "] : "
 $finalString = $currentTime + $stringToLog
 Write-Host $finalString
