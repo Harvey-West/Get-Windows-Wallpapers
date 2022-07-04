@@ -7,7 +7,7 @@
     [ValidateScript({Test-Path $_})]
     $targetFilePath
 ){
-if (!(Test-Path ($targetFilePath+"\test.log")))
+if (!(Test-Path ($targetFilePath+"\application.log")))
 {
    New-Item -path $targetFilePath -name "application.log" -type "file"
    Write-Host "Created new file and text content added"
