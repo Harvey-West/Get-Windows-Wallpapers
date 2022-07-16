@@ -40,9 +40,6 @@ PARAM(
     return $false
 }
 
-$dateTargetFilePath = $targetFilePath + "\" + (Get-Date -format u).substring(0,10) + "\"
-log("Begin copying to: "+$dateTargetFilePath)
-mkdir -Force $dateTargetFilePath | Out-Null
 $existingFiles = Get-ChildItem $targetFilePath -Recurse -Filter "*.png" #Find all existing files with .png extension
 log(""+($existingFiles.Count)+" files exist already")
 
@@ -56,8 +53,13 @@ $filteredFiles = $newFiles | Where-Object {$_.Name -notin ($existingFiles.Name.R
 log(""+($filteredFiles.Count)+ " unique files")
 
 try{
-    #For each filtered file, copy the item to a folder and append ".png" to each file
-    $filteredFiles | ForEach-Object{ log("Beginning to copy file:" + $_.Name); $_.FullName | Copy-Item -Destination (Join-Path $dateTargetFilePath ($_.Name+".png"))}
+    if($filteredFiles.Count -gt 0){
+        $dateTargetFilePath = $targetFilePath + "\" + (Get-Date -format u).substring(0,10) + "\"
+        log("Begin copying to: "+$dateTargetFilePath)
+        mkdir -Force $dateTargetFilePath | Out-Null
+        #For each filtered file, copy the item to a folder and append ".png" to each file
+        $filteredFiles | ForEach-Object{ log("Beginning to copy file:" + $_.Name); $_.FullName | Copy-Item -Destination (Join-Path $dateTargetFilePath ($_.Name+".png"))}
+    }
 } catch {
     log("Error copying file to: " + $dateTargetFilePath)
 }
